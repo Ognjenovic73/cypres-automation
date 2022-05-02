@@ -7,6 +7,6 @@ describe('loginPOM', () => {
       /*  loginPage.emailInput.type('gugagaga@gmail.com')
         loginPage.passwordInput.type('gugagaga1')
         loginPage.submitBtn.click(); */
-        loginPage.login('gugagaga@gmail.com','gugagaga1');
+        loginPage.login('ognjenovic.dragan73@gmail.com','Sith_Lord99');
     })
 })
