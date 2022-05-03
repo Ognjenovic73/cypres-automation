@@ -1,6 +1,6 @@
 class AllGalleriesPage {
     get searchBox() {
-        return cy.get('input[placeholder="Search..."]')
+        return cy.get('input')
     }
 
     get filterBtn() {
@@ -20,8 +20,7 @@ class AllGalleriesPage {
         cy.visit('/');
         this.loadMoreBtn.click();
         this.searchBox.type(search);
-        this.filterBtn.click();
-        this.loadMoreBtn.click();
+        this.filterBtn.click()
     }
 }
 
