@@ -6,7 +6,7 @@ class CreateGalleryPage{
         return cy.get('#description');
     }
     get imageInput() {
-        return cy.get('input[placeholder="image url"]');
+        return cy.get('input-group');
     }
     get addImageBtn() {
         return cy.get('button[type="button"]');
@@ -18,7 +18,7 @@ class CreateGalleryPage{
         return cy.get('i[class="fas fa-chevron-circle-up"]')
     }
     get arrowBtnDown() {
-        return cy.get('i[class="fas fa-chevron-circle-down"]')
+        return cy.get('button'),eq(1)
     }
     get submitBtn() {
         return cy.get('button[type="submit"]').contains('Submit');
@@ -35,6 +35,7 @@ class CreateGalleryPage{
         this.imageInput2.type(image)
         this.arrowBtnUp.click({multiple: true})
         this.arrowBtnDown.click({multiple: true})
+        this.submitBtn.click()
     }
 }
 export const createGalleryPage = new CreateGalleryPage();

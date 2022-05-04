@@ -1,27 +1,36 @@
 class AllGalleriesPage {
-    get searchBox() {
+    get allGalleriesHeading(){
+        return cy.get('h1')
+    }
+    
+    get searchInput() {
         return cy.get('input')
     }
 
     get filterBtn() {
-        return cy.get('button[class="btn btn-outline-secondary input-button"]')
+        return cy.get('btn').first()
     }
 
     get loadMoreBtn() {
-        return cy.get('button[class="btn btn-custom"]')
+        return cy.get('.btn').last()
     }
 
-    get clickSingleGallery() {
-        return cy.get('a[class="box-title"').eq(0)
+    get singleGallery() {
+        return cy.get('.cell')
     }
 
+    search(searchTerm){
+        this.searchInput.type(searchTerm);
+        this.filterButton.click();
+    }
+/*
     allgalleries(search){
         this.clickSingleGallery.click();
         cy.visit('/');
         this.loadMoreBtn.click();
-        this.searchBox.type(search);
+        this.searchInput.type(search);
         this.filterBtn.click()
-    }
+    } */
 }
 
 export const allGalleriesPage = new AllGalleriesPage 

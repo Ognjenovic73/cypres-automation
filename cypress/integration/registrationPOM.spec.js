@@ -14,14 +14,22 @@ describe('registration POM', () => {
     before ('visit register page', () => {
         cy.visit('/register');
         cy.url().should('include', '/register')
+        registerPage.registerHeading.should('have.text','Register')
+        
     })
 
-    it('register with valid data',() => {
+    it('register with invalid email',() => {
         registerPage.register(
+
             registerData.firstName,
             registerData.lastName,
-            registerData.email,
+            'dragan@mail',
             registerData.password
         )
+        registerPage.errorMsg.should('be.visible')
+                    .and('have.text','The email must be a valid email address.')
+                    .and('have.css', 'background-color', 'rgb(248, 215, 218)')
+                    cy.url().should('include', '/register');
     })
+
 }) 

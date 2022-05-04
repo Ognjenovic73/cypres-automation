@@ -1,4 +1,7 @@
 class RegisterPage {
+    get registerHeading() {
+        return cy.get('h1');
+    }
     get firstNameInput () {
         return cy.get('#first-name');
     }
@@ -17,6 +20,10 @@ class RegisterPage {
 
     get confirmPasswordInput() {
         return cy.get('#password-confirmation');
+    }
+
+    get errorMsg() {
+        return cy.get('p[class="alert alert-danger"]');
     }
 
     get tosCheckbox() {
