@@ -18,21 +18,30 @@ describe('registration POM', () => {
         registerPage.registerHeading.should('have.text','Register')   
     })
 
-    it('register with invalid email',() => {
+    it.only('register with invalid email',() => {
+        cy.intercept({
+            method: 'POST',
+            url: 'https://gallery-api.vivifyideas.com/api/auth/register'
+          }).as('unsuccessfulRegistration');
+        })
         registerPage.register(
             registerData.firstName,
             registerData.lastName,
             'dragan@mail',
-            registerData.password
+            registerData.password,
+            cy.wait('@unsuccessfulRegistration').then(interception => {
+                console.log('RESPONSE', interception);
+            })
+        
+        // cy.get(':checkbox').click()
+        //cy.get('button').click()
+        // registerPage.errorMsg.should('be.visible')
+         //           .and('have.text','The email must be a valid email address.')
+         //           .and('have.css', 'background-color', 'rgb(248, 215, 218)')
+         //           cy.url().should('include', '/register');
+        //}
         )
-        cy.get(':checkbox').click()
-        cy.get('button').click()
-        registerPage.errorMsg.should('be.visible')
-                    .and('have.text','The email must be a valid email address.')
-                    .and('have.css', 'background-color', 'rgb(248, 215, 218)')
-                    cy.url().should('include', '/register');
-    })
-
+        
     it('register with email without "."',() => {
         registerPage.register(
             registerData.firstName,
@@ -84,7 +93,8 @@ describe('registration POM', () => {
             registerData.firstName,
             registerData.lastName,
             registerData.email,
-            registerData.password
+            registerData.password,
+            // ovo od Davida registerData.confirmedPassword
         )
         cy.get(':checkbox').click()
         cy.get('button').click()

@@ -1,3 +1,8 @@
 {
-    "baseUrl": "https://gallery-app.vivifyideas.com"
+    "baseUrl": "https://gallery-app.vivifyideas.com",
+    "env": {
+        "EXTERNAL_EMAIL": "ognjenovic.dragan73@gmail.com",
+        "EXTERNAL_PASSWORD": "Sith_Lord99"
+    }
 }
+

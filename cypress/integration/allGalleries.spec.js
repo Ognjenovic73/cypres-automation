@@ -3,9 +3,12 @@ import { allGalleries } from '../page_objects/allGalleries';
 describe('All Galleries test', () => {
 
         beforeEach('visit all galleries page', () => {
-            cy.visit('/');
+           // cy.visit('/');
+            cy.loginViaBackend();
+            cy.visit('/')
         })
         it('validate page', () => {
+            
             allGalleries.allGalleriesHeading
                 .should('be.visible')
                 .and('have.text', "All Galleries")
@@ -55,6 +58,6 @@ describe('All Galleries test', () => {
                 .find('a')
                 .first()
                 .click();
-                cy.url().should('include', '/galleries/987')
+                cy.url().should('include', '/galleries')
         });
 });
