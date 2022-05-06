@@ -1,7 +1,11 @@
+/// <reference types="Cypress">
+
 class RegisterPage {
+
     get registerHeading() {
         return cy.get('h1');
     }
+
     get firstNameInput () {
         return cy.get('#first-name');
     }
@@ -18,7 +22,7 @@ class RegisterPage {
         return cy.get('#password');
     }
 
-    get confirmPasswordInput() {
+    get confirmedPasswordInput() {
         return cy.get('#password-confirmation');
     }
 
@@ -39,11 +43,9 @@ class RegisterPage {
         this.lastNameInput.type(lastName)
         this.emailInput.type(email)
         this.passwordInput.type(password)
-        this.confirmPasswordInput.type(password)
-        this.tosCheckbox.check()
-        this.submitBtn.click()
+        this.confirmedPasswordInput.type(password)
+        // this.tosCheckbox.check()
+        // this.submitBtn.click()
     }
-    
-
 }
 export const registerPage = new RegisterPage();
