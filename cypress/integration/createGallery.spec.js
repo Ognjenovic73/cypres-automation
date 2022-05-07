@@ -72,7 +72,6 @@ describe('createGallery POM', () => {
             createGalleryData.title,
             createGalleryData.description,
             'https://images.all-free-download.com/images/graphiclarge/animal_big_carnivore_263240'
-
         )
         cy.get('button[type="submit"]').contains('Submit').click()
         createGallery.errorMsg.should('be.visible')
@@ -87,7 +86,6 @@ describe('createGallery POM', () => {
             createGalleryData.title,
             createGalleryData.description,
             createGalleryData.image
-
         )
         cy.get('button[type="submit"]').contains('Submit').click()
         cy.url().should('not.include', '/create');

@@ -43,9 +43,8 @@ class RegisterPage {
         this.lastNameInput.type(lastName)
         this.emailInput.type(email)
         this.passwordInput.type(password)
-        // this.confirmedPasswordInput.type(confirmedPassword) (David)
-        // this.tosCheckbox.check()
-        // this.submitBtn.click()
+        this.confirmedPasswordInput.type(confirmedPassword)
+        
     }
 }
 export const registerPage = new RegisterPage();

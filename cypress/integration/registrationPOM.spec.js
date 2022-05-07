@@ -9,7 +9,8 @@ describe('registration POM', () => {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
-        password: faker.internet.password()
+        password: faker.internet.password(),
+        difConfirmedPassword: faker.internet.password()
     }
 
     beforeEach ('visit register page', () => {
@@ -18,35 +19,37 @@ describe('registration POM', () => {
         registerPage.registerHeading.should('have.text','Register')   
     })
 
-    it.only('register with invalid email',() => {
-        cy.intercept({
+    it('register /negative: invalid email',() => {
+        /* cy.intercept({
             method: 'POST',
             url: 'https://gallery-api.vivifyideas.com/api/auth/register'
           }).as('unsuccessfulRegistration');
-        })
+        }) */
         registerPage.register(
             registerData.firstName,
             registerData.lastName,
             'dragan@mail',
             registerData.password,
-            cy.wait('@unsuccessfulRegistration').then(interception => {
-                console.log('RESPONSE', interception);
-            })
+            registerData.password
+            //cy.wait('@unsuccessfulRegistration').then(interception => {
+            //    console.log('RESPONSE', interception);
+            // }
+            ) 
         
-        // cy.get(':checkbox').click()
-        //cy.get('button').click()
-        // registerPage.errorMsg.should('be.visible')
-         //           .and('have.text','The email must be a valid email address.')
-         //           .and('have.css', 'background-color', 'rgb(248, 215, 218)')
-         //           cy.url().should('include', '/register');
-        //}
-        )
-        
-    it('register with email without "."',() => {
+        cy.get(':checkbox').click()
+        cy.get('button').click()
+        registerPage.errorMsg.should('be.visible')
+                     .and('have.text','The email must be a valid email address.')
+                     .and('have.css', 'background-color', 'rgb(248, 215, 218)')                 
+        cy.url().should('include', '/register');
+        })
+           
+    it('register /negative: email without "."',() => {
         registerPage.register(
             registerData.firstName,
             registerData.lastName,
             'dragan@gmailcom',
+            registerData.password,
             registerData.password
         )
         cy.get(':checkbox').click()
@@ -54,30 +57,31 @@ describe('registration POM', () => {
         registerPage.errorMsg.should('be.visible')
                     .and('have.text','The email must be a valid email address.')
                     .and('have.css', 'background-color', 'rgb(248, 215, 218)')
-                    cy.url().should('include', '/register');
+        cy.url().should('include', '/register');
     })
 
-    it('register with invalid password',() => {
+    it('register /negative: invalid password',() => {
         registerPage.register(
             registerData.firstName,
             registerData.lastName,
             registerData.email,
-            '123456a'
+            '123456a',
+            registerData.password
         )
         cy.get(':checkbox').click()
         cy.get('button').click()
         registerPage.errorMsg.should('be.visible')
                     .and('have.text','The password must be at least 8 characters.')
                     .and('have.css', 'background-color', 'rgb(248, 215, 218)')
-                    cy.url().should('include', '/register');
+        cy.url().should('include', '/register');
     })
 
-    it('register without tos checkbox',() => {
+    it('register negative: tos checkbox unchecked',() => {
         registerPage.register(
-
             registerData.firstName,
             registerData.lastName,
             registerData.email,
+            registerData.password,
             registerData.password
         )
         cy.get('button').click()
@@ -87,14 +91,29 @@ describe('registration POM', () => {
         cy.url().should('include', '/register');
     })
 
-    it('register with valid data',() => {
+    it('register /negative: not matching confirmed password',() => {
         registerPage.register(
-
             registerData.firstName,
             registerData.lastName,
             registerData.email,
             registerData.password,
-            // ovo od Davida registerData.confirmedPassword
+            '1234567a'   
+        )
+        cy.get(':checkbox').click()
+        cy.get('button').click()
+        registerPage.errorMsg.should('be.visible')
+                    .and('have.text','The password confirmation does not match.')
+                    .and('have.css', 'background-color', 'rgb(248, 215, 218)')
+        cy.url().should('include', '/register');
+    }) 
+
+    it('register with valid data',() => {
+        registerPage.register(
+            registerData.firstName,
+            registerData.lastName,
+            registerData.email,
+            registerData.password,
+            registerData.password 
         )
         cy.get(':checkbox').click()
         cy.get('button').click()
