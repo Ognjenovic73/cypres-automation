@@ -44,7 +44,17 @@ class RegisterPage {
         this.emailInput.type(email)
         this.passwordInput.type(password)
         this.confirmedPasswordInput.type(confirmedPassword)
-        
+        this.tosCheckbox.click()
+        this.submitBtn.click()
+    }
+
+    registerWithoutToS(firstName,lastName,email,password,confirmedPassword){
+        this.firstNameInput.type(firstName)
+        this.lastNameInput.type(lastName)
+        this.emailInput.type(email)
+        this.passwordInput.type(password)
+        this.confirmedPasswordInput.type(confirmedPassword)
+        this.submitBtn.click()
     }
 }
 export const registerPage = new RegisterPage();

@@ -54,7 +54,17 @@ class CreateGallery{
         this.imageInput.type(image)
         this.addImageBtn.click({multiple: true})
         this.imageInput2.type(image)
-        this.deleteUrlBtn.click()   
+        this.deleteUrlBtn.click()  
+        this.submitBtn.click() 
+    }
+    cancelCreateGallery (title, description, image) {
+        this.titleInput.type(title)
+        this.descriptionInput.type(description)
+        this.imageInput.type(image)
+        this.addImageBtn.click({multiple: true})
+        this.imageInput2.type(image)
+        this.deleteUrlBtn.click()  
+        this.cancelBtn.click()  
     }
 }
 export const createGallery = new CreateGallery();

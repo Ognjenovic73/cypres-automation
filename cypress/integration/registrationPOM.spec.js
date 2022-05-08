@@ -35,9 +35,6 @@ describe('registration POM', () => {
             //    console.log('RESPONSE', interception);
             // }
             ) 
-        
-        cy.get(':checkbox').click()
-        cy.get('button').click()
         registerPage.errorMsg.should('be.visible')
                      .and('have.text','The email must be a valid email address.')
                      .and('have.css', 'background-color', 'rgb(248, 215, 218)')                 
@@ -52,8 +49,6 @@ describe('registration POM', () => {
             registerData.password,
             registerData.password
         )
-        cy.get(':checkbox').click()
-        cy.get('button').click()
         registerPage.errorMsg.should('be.visible')
                     .and('have.text','The email must be a valid email address.')
                     .and('have.css', 'background-color', 'rgb(248, 215, 218)')
@@ -68,8 +63,6 @@ describe('registration POM', () => {
             '123456a',
             registerData.password
         )
-        cy.get(':checkbox').click()
-        cy.get('button').click()
         registerPage.errorMsg.should('be.visible')
                     .and('have.text','The password must be at least 8 characters.')
                     .and('have.css', 'background-color', 'rgb(248, 215, 218)')
@@ -77,14 +70,13 @@ describe('registration POM', () => {
     })
 
     it('register negative: tos checkbox unchecked',() => {
-        registerPage.register(
+        registerPage.registerWithoutToS(
             registerData.firstName,
             registerData.lastName,
             registerData.email,
             registerData.password,
             registerData.password
         )
-        cy.get('button').click()
         registerPage.errorMsg.should('be.visible')
                     .and('have.text','The terms and conditions must be accepted.')
                     .and('have.css', 'background-color', 'rgb(248, 215, 218)')
@@ -99,8 +91,6 @@ describe('registration POM', () => {
             registerData.password,
             '1234567a'   
         )
-        cy.get(':checkbox').click()
-        cy.get('button').click()
         registerPage.errorMsg.should('be.visible')
                     .and('have.text','The password confirmation does not match.')
                     .and('have.css', 'background-color', 'rgb(248, 215, 218)')
@@ -119,4 +109,4 @@ describe('registration POM', () => {
         cy.get('button').click()
                     cy.url().should('not.include', '/register');
     })
-}) 
+})
