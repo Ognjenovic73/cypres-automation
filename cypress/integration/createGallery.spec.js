@@ -12,10 +12,11 @@ describe('createGallery POM', () => {
     }
 
     beforeEach ('visit login page', () => {
-        cy.visit('/login');
-        loginPage.login('ognjenovic.dragan73@gmail.com','Sith_Lord99');
-        cy.url().should('include', '/login')
-        cy.wait(2000);
+        cy.loginViaBackend();
+        //cy.visit('/login');
+        //loginPage.login('ognjenovic.dragan73@gmail.com','Sith_Lord99');
+        //cy.url().should('include', '/login')
+        //y.wait(2000);
         cy.visit('/create')
         cy.url().should('include', '/create')
     })
