@@ -20,21 +20,23 @@ describe('registration POM', () => {
     })
 
     it('register /negative: invalid email',() => {
-        /* cy.intercept({
+         cy.intercept({
             method: 'POST',
             url: 'https://gallery-api.vivifyideas.com/api/auth/register'
-          }).as('unsuccessfulRegistration');
-        }) */
+          }).as('invalidData');
+        
         registerPage.register(
             registerData.firstName,
             registerData.lastName,
             'dragan@mail',
             registerData.password,
             registerData.password
-            //cy.wait('@unsuccessfulRegistration').then(interception => {
-            //    console.log('RESPONSE', interception);
-            // }
-            ) 
+        )
+        cy.wait('@invalidData').then(interception => {
+            cy.log(JSON.stringify(interception.response.statusCode));
+            expect(interception.response.statusCode).to.eql(422);
+            console.log('RESPONSE', interception);
+     })
         registerPage.errorMsg.should('be.visible')
                      .and('have.text','The email must be a valid email address.')
                      .and('have.css', 'background-color', 'rgb(248, 215, 218)')                 
@@ -42,6 +44,12 @@ describe('registration POM', () => {
         })
            
     it('register /negative: email without "."',() => {
+
+        cy.intercept({
+            method: 'POST',
+            url: 'https://gallery-api.vivifyideas.com/api/auth/register'
+          }).as('invalidData');
+
         registerPage.register(
             registerData.firstName,
             registerData.lastName,
@@ -49,6 +57,11 @@ describe('registration POM', () => {
             registerData.password,
             registerData.password
         )
+        cy.wait('@invalidData').then(interception => {
+            cy.log(JSON.stringify(interception.response.statusCode));
+            expect(interception.response.statusCode).to.eql(422);
+            console.log('RESPONSE', interception);
+     })
         registerPage.errorMsg.should('be.visible')
                     .and('have.text','The email must be a valid email address.')
                     .and('have.css', 'background-color', 'rgb(248, 215, 218)')
@@ -56,6 +69,12 @@ describe('registration POM', () => {
     })
 
     it('register /negative: invalid password',() => {
+
+        cy.intercept({
+            method: 'POST',
+            url: 'https://gallery-api.vivifyideas.com/api/auth/register'
+          }).as('invalidData');
+
         registerPage.register(
             registerData.firstName,
             registerData.lastName,
@@ -63,6 +82,11 @@ describe('registration POM', () => {
             '123456a',
             registerData.password
         )
+        cy.wait('@invalidData').then(interception => {
+            cy.log(JSON.stringify(interception.response.statusCode));
+            expect(interception.response.statusCode).to.eql(422);
+            console.log('RESPONSE', interception);
+     })
         registerPage.errorMsg.should('be.visible')
                     .and('have.text','The password must be at least 8 characters.')
                     .and('have.css', 'background-color', 'rgb(248, 215, 218)')
@@ -70,6 +94,12 @@ describe('registration POM', () => {
     })
 
     it('register negative: tos checkbox unchecked',() => {
+
+        cy.intercept({
+            method: 'POST',
+            url: 'https://gallery-api.vivifyideas.com/api/auth/register'
+          }).as('invalidData');
+
         registerPage.registerWithoutToS(
             registerData.firstName,
             registerData.lastName,
@@ -77,6 +107,11 @@ describe('registration POM', () => {
             registerData.password,
             registerData.password
         )
+        cy.wait('@invalidData').then(interception => {
+            cy.log(JSON.stringify(interception.response.statusCode));
+            expect(interception.response.statusCode).to.eql(422);
+            console.log('RESPONSE', interception);
+     })
         registerPage.errorMsg.should('be.visible')
                     .and('have.text','The terms and conditions must be accepted.')
                     .and('have.css', 'background-color', 'rgb(248, 215, 218)')
@@ -84,6 +119,12 @@ describe('registration POM', () => {
     })
 
     it('register /negative: not matching confirmed password',() => {
+
+        cy.intercept({
+            method: 'POST',
+            url: 'https://gallery-api.vivifyideas.com/api/auth/register'
+          }).as('invalidData');
+
         registerPage.register(
             registerData.firstName,
             registerData.lastName,
@@ -91,6 +132,11 @@ describe('registration POM', () => {
             registerData.password,
             '1234567a'   
         )
+        cy.wait('@invalidData').then(interception => {
+            cy.log(JSON.stringify(interception.response.statusCode));
+            expect(interception.response.statusCode).to.eql(422);
+            console.log('RESPONSE', interception);
+     })
         registerPage.errorMsg.should('be.visible')
                     .and('have.text','The password confirmation does not match.')
                     .and('have.css', 'background-color', 'rgb(248, 215, 218)')
@@ -98,6 +144,12 @@ describe('registration POM', () => {
     }) 
 
     it('register with valid data',() => {
+
+        cy.intercept({
+            method: 'POST',
+            url: 'https://gallery-api.vivifyideas.com/api/auth/register'
+          }).as('succesfullRegistration');
+
         registerPage.register(
             registerData.firstName,
             registerData.lastName,
@@ -105,8 +157,11 @@ describe('registration POM', () => {
             registerData.password,
             registerData.password 
         )
-        cy.get(':checkbox').click()
-        cy.get('button').click()
-                    cy.url().should('not.include', '/register');
+        cy.wait('@succesfullRegistration').then(interception => {
+            cy.log(JSON.stringify(interception.response.statusCode));
+            expect(interception.response.statusCode).to.eql(200);
+            console.log('RESPONSE', interception);
+        })
+        cy.url().should('not.include', '/register');
     })
 })
